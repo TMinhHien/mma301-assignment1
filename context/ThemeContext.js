@@ -1,34 +1,38 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Light Theme Design Tokens
+// Premium Light Theme
 const lightTheme = {
   mode: 'light',
-  background: '#F5F7FA',
+  background: '#F8FAFC',
   surface: '#FFFFFF',
-  primary: '#4A90D9',
-  primaryDark: '#2C6FAC',
-  accent: '#7BC8A4',
-  text: '#1A1A2E',
-  textSecondary: '#6B7280',
-  border: '#E5E7EB',
+  primary: '#3B82F6',
+  primaryDark: '#2563EB',
+  primaryLight: '#DBEAFE',
+  accent: '#10B981',
+  accentLight: '#D1FAE5',
+  text: '#0F172A',
+  textSecondary: '#64748B',
+  border: '#E2E8F0',
   card: '#FFFFFF',
-  inputBg: '#F9FAFB',
+  inputBg: '#F1F5F9',
   danger: '#EF4444',
   success: '#10B981',
   headerBg: '#FFFFFF',
-  headerText: '#1A1A2E',
-  shadow: '#00000015',
+  headerText: '#0F172A',
+  shadow: 'rgba(15, 23, 42, 0.08)',
 };
 
-// Dark Theme Design Tokens
+// Premium Dark Theme
 const darkTheme = {
   mode: 'dark',
-  background: '#0F172A',
+  background: '#0B1120',
   surface: '#1E293B',
   primary: '#60A5FA',
   primaryDark: '#3B82F6',
+  primaryLight: '#1E3A8A',
   accent: '#34D399',
-  text: '#F1F5F9',
+  accentLight: '#064E3B',
+  text: '#F8FAFC',
   textSecondary: '#94A3B8',
   border: '#334155',
   card: '#1E293B',
@@ -36,8 +40,8 @@ const darkTheme = {
   danger: '#F87171',
   success: '#34D399',
   headerBg: '#1E293B',
-  headerText: '#F1F5F9',
-  shadow: '#00000040',
+  headerText: '#F8FAFC',
+  shadow: 'rgba(0, 0, 0, 0.5)',
 };
 
 export const ThemeContext = createContext();
@@ -55,7 +59,6 @@ export function ThemeProvider({ children }) {
   );
 }
 
-// Custom hook để dùng theme dễ hơn
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) throw new Error('useTheme must be used within ThemeProvider');

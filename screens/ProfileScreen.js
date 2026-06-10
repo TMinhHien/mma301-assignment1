@@ -17,7 +17,6 @@ export default function ProfileScreen({ navigation, route }) {
     'React Native enthusiast | FPT University student | Building cool apps 🚀'
   );
 
-  // Nhận data từ EditProfileScreen qua route.params
   useEffect(() => {
     if (route.params?.updatedName) setName(route.params.updatedName);
     if (route.params?.updatedBio) setBio(route.params.updatedBio);
@@ -30,81 +29,78 @@ export default function ProfileScreen({ navigation, route }) {
     },
     scrollContent: {
       padding: 20,
-      paddingTop: 28,
-    },
-    sectionTitle: {
-      fontSize: 13,
-      fontWeight: '600',
-      color: theme.textSecondary,
-      textTransform: 'uppercase',
-      letterSpacing: 1,
-      marginBottom: 16,
-    },
-    actionsContainer: {
-      marginTop: 24,
-      gap: 10,
-    },
-    button: {
-      paddingVertical: 14,
-      paddingHorizontal: 24,
-      borderRadius: 12,
-      alignItems: 'center',
-      width: '100%',
-      marginVertical: 4,
-      backgroundColor: theme.primary,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      gap: 8,
-    },
-    buttonText: {
-      fontSize: 16,
-      fontWeight: '600',
-      letterSpacing: 0.5,
-      color: '#FFFFFF',
-    },
-    outlineButton: {
-      paddingVertical: 14,
-      paddingHorizontal: 24,
-      borderRadius: 12,
-      borderWidth: 2,
-      borderColor: theme.primary,
-      alignItems: 'center',
-      width: '100%',
-      marginVertical: 4,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      gap: 8,
-    },
-    outlineButtonText: {
-      fontSize: 16,
-      fontWeight: '600',
-      letterSpacing: 0.5,
-      color: theme.primary,
+      paddingTop: 24,
     },
     statsRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginTop: 24,
       gap: 12,
+      marginBottom: 32,
     },
     statCard: {
       flex: 1,
       backgroundColor: theme.surface,
-      borderRadius: 12,
+      borderRadius: 16,
       padding: 16,
       alignItems: 'center',
       borderWidth: 1,
       borderColor: theme.border,
+      shadowColor: theme.shadow,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 4,
+      elevation: 2,
     },
     statValue: {
-      fontSize: 20,
-      fontWeight: 'bold',
+      fontSize: 22,
+      fontWeight: '800',
       color: theme.primary,
+      marginBottom: 4,
     },
     statLabel: {
       fontSize: 12,
+      fontWeight: '600',
       color: theme.textSecondary,
-      marginTop: 4,
+      textTransform: 'uppercase',
+      letterSpacing: 0.5,
+    },
+    actionSection: {
+      gap: 12,
+    },
+    primaryBtn: {
+      backgroundColor: theme.primary,
+      paddingVertical: 16,
+      borderRadius: 14,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 8,
+      shadowColor: theme.primary,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.25,
+      shadowRadius: 8,
+      elevation: 4,
+    },
+    primaryBtnText: {
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    secondaryBtn: {
+      backgroundColor: theme.surface,
+      paddingVertical: 16,
+      borderRadius: 14,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 8,
+      borderWidth: 1,
+      borderColor: theme.border,
+    },
+    secondaryBtnText: {
+      color: theme.text,
+      fontSize: 16,
+      fontWeight: '600',
     },
   });
 
@@ -114,8 +110,6 @@ export default function ProfileScreen({ navigation, route }) {
       contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={styles.sectionTitle}>Profile Overview</Text>
-
       <ProfileCard name={name} bio={bio} theme={theme} />
 
       <View style={styles.statsRow}>
@@ -133,25 +127,23 @@ export default function ProfileScreen({ navigation, route }) {
         </View>
       </View>
 
-      <View style={styles.actionsContainer}>
+      <View style={styles.actionSection}>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            navigation.navigate('EditProfile', { name, bio })
-          }
-          activeOpacity={0.8}
+          style={styles.primaryBtn}
+          onPress={() => navigation.navigate('EditProfile', { name, bio })}
+          activeOpacity={0.85}
         >
-          <Ionicons name="pencil" size={18} color="#FFFFFF" />
-          <Text style={styles.buttonText}>Edit Profile</Text>
+          <Ionicons name="pencil" size={20} color="#fff" />
+          <Text style={styles.primaryBtnText}>Edit Profile</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.outlineButton}
+          style={styles.secondaryBtn}
           onPress={() => navigation.navigate('Settings')}
-          activeOpacity={0.8}
+          activeOpacity={0.85}
         >
-          <Ionicons name="settings-outline" size={18} color={theme.primary} />
-          <Text style={styles.outlineButtonText}>Settings</Text>
+          <Ionicons name="settings-outline" size={20} color={theme.textSecondary} />
+          <Text style={styles.secondaryBtnText}>Settings</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

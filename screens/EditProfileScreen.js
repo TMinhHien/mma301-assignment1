@@ -14,7 +14,6 @@ import * as Yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 
-// Yup validation schema
 const validationSchema = Yup.object({
   name: Yup.string()
     .min(2, 'Name must be at least 2 characters')
@@ -48,114 +47,120 @@ export default function EditProfileScreen({ navigation, route }) {
       backgroundColor: theme.background,
     },
     scrollContent: {
-      padding: 20,
-      paddingTop: 28,
+      padding: 24,
     },
     headerText: {
-      fontSize: 22,
-      fontWeight: 'bold',
+      fontSize: 26,
+      fontWeight: '800',
       color: theme.text,
-      marginBottom: 6,
+      marginBottom: 8,
+      letterSpacing: -0.5,
     },
     headerSubText: {
-      fontSize: 14,
+      fontSize: 15,
       color: theme.textSecondary,
-      marginBottom: 28,
+      marginBottom: 32,
+      lineHeight: 22,
     },
     fieldContainer: {
-      marginBottom: 20,
+      marginBottom: 24,
     },
     label: {
       fontSize: 14,
-      fontWeight: '600',
+      fontWeight: '700',
       color: theme.text,
-      marginBottom: 8,
+      marginBottom: 10,
+      textTransform: 'uppercase',
+      letterSpacing: 0.5,
     },
     required: {
       color: theme.danger,
     },
-    input: {
+    inputWrap: {
+      flexDirection: 'row',
+      alignItems: 'center',
       backgroundColor: theme.inputBg,
-      borderRadius: 10,
+      borderRadius: 14,
       borderWidth: 1.5,
-      paddingHorizontal: 14,
-      paddingVertical: 12,
-      fontSize: 15,
+      borderColor: theme.border,
+      paddingHorizontal: 16,
+    },
+    inputWrapError: {
+      borderColor: theme.danger,
+      backgroundColor: theme.danger + '0A',
+    },
+    inputIcon: {
+      marginRight: 10,
+    },
+    input: {
+      flex: 1,
+      paddingVertical: 14,
+      fontSize: 16,
       color: theme.text,
     },
-    inputError: {
-      borderColor: theme.danger,
-    },
-    inputValid: {
-      borderColor: theme.border,
-    },
     errorText: {
-      fontSize: 12,
+      fontSize: 13,
       color: theme.danger,
-      marginTop: 6,
-      marginLeft: 2,
+      marginTop: 8,
+      fontWeight: '500',
     },
     counterContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginTop: 6,
+      marginTop: 8,
     },
     counter: {
-      fontSize: 12,
+      fontSize: 13,
+      fontWeight: '500',
       color: theme.textSecondary,
     },
     counterWarning: {
       color: theme.danger,
     },
-    buttonContainer: {
-      marginTop: 8,
-      gap: 10,
+    actionSection: {
+      marginTop: 16,
+      gap: 12,
     },
-    button: {
-      paddingVertical: 14,
-      paddingHorizontal: 24,
-      borderRadius: 12,
-      alignItems: 'center',
-      width: '100%',
-      marginVertical: 4,
+    saveBtn: {
+      backgroundColor: theme.primary,
+      paddingVertical: 16,
+      borderRadius: 14,
       flexDirection: 'row',
       justifyContent: 'center',
-      gap: 8,
-    },
-    buttonText: {
-      fontSize: 16,
-      fontWeight: '600',
-      letterSpacing: 0.5,
-      color: '#FFFFFF',
-    },
-    outlineButton: {
-      paddingVertical: 14,
-      paddingHorizontal: 24,
-      borderRadius: 12,
-      borderWidth: 2,
-      borderColor: theme.primary,
       alignItems: 'center',
-      width: '100%',
-      marginVertical: 4,
-      flexDirection: 'row',
-      justifyContent: 'center',
       gap: 8,
+      shadowColor: theme.primary,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.25,
+      shadowRadius: 8,
+      elevation: 4,
     },
-    outlineButtonText: {
-      fontSize: 16,
-      fontWeight: '600',
-      letterSpacing: 0.5,
-      color: theme.primary,
-    },
-    divider: {
-      height: 1,
+    saveBtnDisabled: {
       backgroundColor: theme.border,
-      marginVertical: 20,
+      shadowOpacity: 0,
+    },
+    saveBtnText: {
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    saveBtnTextDisabled: {
+      color: theme.textSecondary,
+    },
+    cancelBtn: {
+      paddingVertical: 16,
+      borderRadius: 14,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    cancelBtnText: {
+      color: theme.textSecondary,
+      fontSize: 16,
+      fontWeight: '600',
     },
   });
 
   const bioLength = formik.values.bio.length;
-  // dirty không cần thiết vì form đã được prefill từ route.params
   const isFormValid = formik.isValid && Object.keys(formik.values).every(k => formik.values[k] !== '');
 
   return (
@@ -170,119 +175,81 @@ export default function EditProfileScreen({ navigation, route }) {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        <Text style={styles.headerText}>Edit Your Profile</Text>
+        <Text style={styles.headerText}>Edit Profile</Text>
         <Text style={styles.headerSubText}>
-          Update your personal information below.
+          Make changes to your personal information and bio.
         </Text>
 
-        {/* Name Field */}
         <View style={styles.fieldContainer}>
           <Text style={styles.label}>
             Display Name <Text style={styles.required}>*</Text>
           </Text>
-          <TextInput
-            style={[
-              styles.input,
-              formik.errors.name && formik.touched.name
-                ? styles.inputError
-                : styles.inputValid,
-            ]}
-            placeholder="Enter your name"
-            placeholderTextColor={theme.textSecondary}
-            value={formik.values.name}
-            onChangeText={formik.handleChange('name')}
-            onBlur={formik.handleBlur('name')}
-            autoCapitalize="words"
-            returnKeyType="next"
-          />
+          <View style={[styles.inputWrap, formik.errors.name && formik.touched.name && styles.inputWrapError]}>
+            <Ionicons name="person-outline" size={20} color={theme.textSecondary} style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your name"
+              placeholderTextColor={theme.textSecondary}
+              value={formik.values.name}
+              onChangeText={formik.handleChange('name')}
+              onBlur={formik.handleBlur('name')}
+              autoCapitalize="words"
+            />
+          </View>
           {formik.errors.name && formik.touched.name && (
-            <Text style={styles.errorText}>⚠️ {formik.errors.name}</Text>
+            <Text style={styles.errorText}>{formik.errors.name}</Text>
           )}
         </View>
 
-        {/* Bio Field */}
         <View style={styles.fieldContainer}>
           <Text style={styles.label}>
             Bio <Text style={styles.required}>*</Text>
           </Text>
-          <TextInput
-            style={[
-              styles.input,
-              { height: 100, textAlignVertical: 'top', paddingTop: 12 },
-              formik.errors.bio && formik.touched.bio
-                ? styles.inputError
-                : styles.inputValid,
-            ]}
-            placeholder="Tell us about yourself..."
-            placeholderTextColor={theme.textSecondary}
-            value={formik.values.bio}
-            onChangeText={formik.handleChange('bio')}
-            onBlur={formik.handleBlur('bio')}
-            multiline
-            numberOfLines={4}
-          />
+          <View style={[styles.inputWrap, { alignItems: 'flex-start' }, formik.errors.bio && formik.touched.bio && styles.inputWrapError]}>
+            <Ionicons name="document-text-outline" size={20} color={theme.textSecondary} style={[styles.inputIcon, { marginTop: 14 }]} />
+            <TextInput
+              style={[styles.input, { height: 100, textAlignVertical: 'top' }]}
+              placeholder="Tell us about yourself..."
+              placeholderTextColor={theme.textSecondary}
+              value={formik.values.bio}
+              onChangeText={formik.handleChange('bio')}
+              onBlur={formik.handleBlur('bio')}
+              multiline
+            />
+          </View>
           <View style={styles.counterContainer}>
             <Text style={styles.errorText}>
-              {formik.errors.bio && formik.touched.bio
-                ? `⚠️ ${formik.errors.bio}`
-                : ''}
+              {formik.errors.bio && formik.touched.bio ? formik.errors.bio : ''}
             </Text>
-            <Text
-              style={[
-                styles.counter,
-                bioLength > 180 ? styles.counterWarning : null,
-              ]}
-            >
+            <Text style={[styles.counter, bioLength > 180 && styles.counterWarning]}>
               {bioLength}/200
             </Text>
           </View>
         </View>
 
-        <View style={styles.divider} />
-
-        {/* Action Buttons */}
-        <View style={styles.buttonContainer}>
+        <View style={styles.actionSection}>
           <TouchableOpacity
-            style={[
-              styles.button,
-              {
-                backgroundColor:
-                  !isFormValid || formik.isSubmitting
-                    ? theme.border
-                    : theme.primary,
-              },
-            ]}
+            style={[styles.saveBtn, (!isFormValid || formik.isSubmitting) && styles.saveBtnDisabled]}
             onPress={formik.handleSubmit}
-            activeOpacity={0.8}
+            activeOpacity={0.85}
             disabled={!isFormValid || formik.isSubmitting}
           >
             <Ionicons
-              name="save-outline"
-              size={18}
+              name="checkmark"
+              size={20}
               color={!isFormValid || formik.isSubmitting ? theme.textSecondary : '#FFFFFF'}
             />
-            <Text
-              style={[
-                styles.buttonText,
-                {
-                  color:
-                    !isFormValid || formik.isSubmitting
-                      ? theme.textSecondary
-                      : '#FFFFFF',
-                },
-              ]}
-            >
+            <Text style={[styles.saveBtnText, (!isFormValid || formik.isSubmitting) && styles.saveBtnTextDisabled]}>
               Save Changes
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.outlineButton}
+            style={styles.cancelBtn}
             onPress={() => navigation.goBack()}
             activeOpacity={0.8}
           >
-            <Ionicons name="close-outline" size={18} color={theme.primary} />
-            <Text style={styles.outlineButtonText}>Cancel</Text>
+            <Text style={styles.cancelBtnText}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

@@ -20,81 +20,60 @@ export default function SettingsScreen({ navigation }) {
     },
     scrollContent: {
       padding: 20,
-      paddingTop: 28,
     },
-    pageTitle: {
-      fontSize: 22,
-      fontWeight: 'bold',
-      color: theme.text,
-      marginBottom: 24,
-    },
-    sectionCard: {
+    sectionGroup: {
       backgroundColor: theme.surface,
-      borderRadius: 14,
-      padding: 18,
-      marginBottom: 16,
+      borderRadius: 16,
+      overflow: 'hidden',
+      marginBottom: 24,
       borderWidth: 1,
       borderColor: theme.border,
+      shadowColor: theme.shadow,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 6,
+      elevation: 2,
     },
     sectionHeader: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 14,
-      gap: 8,
-    },
-    sectionTitle: {
-      fontSize: 15,
+      paddingHorizontal: 16,
+      paddingTop: 16,
+      paddingBottom: 8,
+      fontSize: 13,
       fontWeight: '700',
-      color: theme.text,
+      color: theme.textSecondary,
+      textTransform: 'uppercase',
+      letterSpacing: 0.5,
     },
-    divider: {
-      height: 1,
-      backgroundColor: theme.border,
-      marginVertical: 12,
-    },
-    infoRow: {
+    itemRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingVertical: 6,
+      paddingVertical: 16,
+      paddingHorizontal: 16,
+      borderTopWidth: 1,
+      borderTopColor: theme.border,
     },
-    infoLabel: {
-      fontSize: 14,
+    itemRowFirst: {
+      borderTopWidth: 0,
+    },
+    itemLabel: {
+      fontSize: 16,
+      color: theme.text,
+      fontWeight: '500',
+    },
+    itemValue: {
+      fontSize: 16,
       color: theme.textSecondary,
     },
-    infoValue: {
-      fontSize: 14,
-      fontWeight: '600',
-      color: theme.text,
+    dangerText: {
+      color: theme.danger,
     },
-    button: {
-      paddingVertical: 14,
-      paddingHorizontal: 24,
-      borderRadius: 12,
-      alignItems: 'center',
-      marginTop: 8,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      gap: 8,
-      borderWidth: 2,
-      borderColor: theme.primary,
-    },
-    buttonText: {
-      fontSize: 16,
-      fontWeight: '600',
-      letterSpacing: 0.5,
-      color: theme.primary,
-    },
-    badge: {
-      backgroundColor: theme.primary + '20',
-      borderRadius: 6,
-      paddingHorizontal: 8,
-      paddingVertical: 2,
-    },
-    badgeText: {
-      fontSize: 11,
-      fontWeight: '600',
-      color: theme.primary,
+    footerText: {
+      textAlign: 'center',
+      fontSize: 13,
+      color: theme.textSecondary,
+      marginTop: 32,
+      marginBottom: 16,
     },
   });
 
@@ -104,68 +83,45 @@ export default function SettingsScreen({ navigation }) {
       contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={styles.pageTitle}>Preferences</Text>
-
-      {/* Appearance Section */}
-      <View style={styles.sectionCard}>
-        <View style={styles.sectionHeader}>
-          <Ionicons name="color-palette-outline" size={20} color={theme.primary} />
-          <Text style={styles.sectionTitle}>🎨 Appearance</Text>
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>{isDark ? 'DARK' : 'LIGHT'}</Text>
+      <Text style={styles.sectionHeader}>Preferences</Text>
+      <View style={styles.sectionGroup}>
+        <View style={[styles.itemRow, styles.itemRowFirst, { paddingVertical: 4 }]}>
+          <ThemeToggleSwitch
+            isDark={isDark}
+            onToggle={toggleTheme}
+            theme={theme}
+          />
+        </View>
+        <TouchableOpacity style={styles.itemRow} activeOpacity={0.7}>
+          <Text style={styles.itemLabel}>Notifications</Text>
+          <Ionicons name="chevron-forward" size={20} color={theme.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.itemRow} activeOpacity={0.7}>
+          <Text style={styles.itemLabel}>Language</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+            <Text style={styles.itemValue}>English</Text>
+            <Ionicons name="chevron-forward" size={20} color={theme.textSecondary} />
           </View>
-        </View>
-
-        <ThemeToggleSwitch
-          isDark={isDark}
-          onToggle={toggleTheme}
-          theme={theme}
-        />
+        </TouchableOpacity>
       </View>
 
-      {/* About Section */}
-      <View style={styles.sectionCard}>
-        <View style={styles.sectionHeader}>
-          <Ionicons name="information-circle-outline" size={20} color={theme.primary} />
-          <Text style={styles.sectionTitle}>ℹ️ About</Text>
+      <Text style={styles.sectionHeader}>About App</Text>
+      <View style={styles.sectionGroup}>
+        <View style={[styles.itemRow, styles.itemRowFirst]}>
+          <Text style={styles.itemLabel}>Version</Text>
+          <Text style={styles.itemValue}>1.0.0 Pro</Text>
         </View>
-
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Version</Text>
-          <Text style={styles.infoValue}>1.0.0</Text>
+        <View style={styles.itemRow}>
+          <Text style={styles.itemLabel}>Assignment</Text>
+          <Text style={styles.itemValue}>Assignment 1</Text>
         </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Assignment</Text>
-          <Text style={styles.infoValue}>Assignment 1</Text>
-        </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>University</Text>
-          <Text style={styles.infoValue}>FPT University</Text>
-        </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Framework</Text>
-          <Text style={styles.infoValue}>Expo ~54.0.35</Text>
+        <View style={styles.itemRow}>
+          <Text style={styles.itemLabel}>Framework</Text>
+          <Text style={styles.itemValue}>React Native / Expo</Text>
         </View>
       </View>
 
-      {/* Back Button */}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Home')}
-        activeOpacity={0.8}
-      >
-        <Ionicons name="arrow-back-outline" size={18} color={theme.primary} />
-        <Text style={styles.buttonText}>Back to Home</Text>
-      </TouchableOpacity>
+      <Text style={styles.footerText}>Made with ❤️ for MMA301</Text>
     </ScrollView>
   );
 }
