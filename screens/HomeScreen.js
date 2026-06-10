@@ -77,18 +77,7 @@ export default function HomeScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* Feature Banner */}
-        <View style={[styles.banner, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-          <View style={[styles.bannerIconWrap, { backgroundColor: theme.primary + '18' }]}>
-            <Ionicons name="sparkles" size={28} color={theme.primary} />
-          </View>
-          <View style={styles.bannerText}>
-            <Text style={[styles.bannerTitle, { color: theme.text }]}>Personalize your profile</Text>
-            <Text style={[styles.bannerDesc, { color: theme.textSecondary }]}>
-              Update your name, bio and switch themes anytime
-            </Text>
-          </View>
-        </View>
+
 
         {/* CTA Buttons */}
         <TouchableOpacity
@@ -196,34 +185,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16,
   },
-  banner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 20,
-    borderWidth: 1,
-    gap: 14,
-  },
-  bannerIconWrap: {
-    width: 52,
-    height: 52,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  bannerText: {
-    flex: 1,
-  },
-  bannerTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    marginBottom: 4,
-  },
-  bannerDesc: {
-    fontSize: 12,
-    lineHeight: 17,
-  },
+
   ctaBtn: {
     flexDirection: 'row',
     alignItems: 'center',
