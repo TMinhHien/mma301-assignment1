@@ -1,12 +1,11 @@
 {
   "expo": {
-    "name": "happy-red-hummus",
-    "slug": "snack-4f43890e-10ea-47a1-bc60-3ddd75f82fd9",
+    "name": "MMA301 Assignment 1",
+    "slug": "mma301-assignment1",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -19,8 +18,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

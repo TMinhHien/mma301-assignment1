@@ -9,7 +9,7 @@ import SettingsScreen from './screens/SettingsScreen';
 
 const Stack = createStackNavigator();
 
-// AppNavigator di chuyển vào trong ThemeProvider để có thể đọc context
+// AppNavigator nằm trong ThemeProvider để đọc được context
 function AppNavigator() {
   const { theme } = useTheme();
 
