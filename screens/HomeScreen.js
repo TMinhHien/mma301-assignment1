@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -98,12 +98,7 @@ export default function HomeScreen({ navigation }) {
       letterSpacing: 0.5,
       color: theme.primary,
     },
-    divider: {
-      height: 1,
-      backgroundColor: theme.border,
-      width: '100%',
-      marginVertical: 16,
-    },
+
   });
 
   return (

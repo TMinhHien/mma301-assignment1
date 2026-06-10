@@ -1,8 +1,6 @@
+// Expo Snack sử dụng App.js trực tiếp làm entry point
+// File này được giữ lại để tương thích với Expo CLI thông thường
 import { registerRootComponent } from 'expo';
-
 import App from './App';
 
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in Expo Go or in a native build,
-// the environment is set up appropriately
 registerRootComponent(App);
