@@ -155,7 +155,8 @@ export default function EditProfileScreen({ navigation, route }) {
   });
 
   const bioLength = formik.values.bio.length;
-  const isFormValid = formik.isValid && formik.dirty;
+  // dirty không cần thiết vì form đã được prefill từ route.params
+  const isFormValid = formik.isValid && Object.keys(formik.values).every(k => formik.values[k] !== '');
 
   return (
     <KeyboardAvoidingView
