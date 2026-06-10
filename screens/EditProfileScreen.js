@@ -16,9 +16,11 @@ import { useTheme } from '../context/ThemeContext';
 
 const validationSchema = Yup.object({
   name: Yup.string()
+    .matches(/^[^0-9]*$/, 'Name cannot contain numbers')
     .min(2, 'Name must be at least 2 characters')
     .max(50, 'Name is too long')
     .required('Name is required'),
+  avatarUrl: Yup.string().url('Must be a valid URL'),
   bio: Yup.string()
     .max(200, 'Bio cannot exceed 200 characters')
     .required('Bio is required'),
@@ -31,12 +33,14 @@ export default function EditProfileScreen({ navigation, route }) {
     initialValues: {
       name: route.params?.name || '',
       bio: route.params?.bio || '',
+      avatarUrl: route.params?.avatarUrl || '',
     },
     validationSchema,
     onSubmit: (values) => {
       navigation.navigate('Profile', {
         updatedName: values.name,
         updatedBio: values.bio,
+        updatedAvatarUrl: values.avatarUrl,
       });
     },
   });
@@ -198,6 +202,28 @@ export default function EditProfileScreen({ navigation, route }) {
           </View>
           {formik.errors.name && formik.touched.name && (
             <Text style={styles.errorText}>{formik.errors.name}</Text>
+          )}
+        </View>
+
+        <View style={styles.fieldContainer}>
+          <Text style={styles.label}>
+            Avatar Link
+          </Text>
+          <View style={[styles.inputWrap, formik.errors.avatarUrl && formik.touched.avatarUrl && styles.inputWrapError]}>
+            <Ionicons name="link-outline" size={20} color={theme.textSecondary} style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder="https://..."
+              placeholderTextColor={theme.textSecondary}
+              value={formik.values.avatarUrl}
+              onChangeText={formik.handleChange('avatarUrl')}
+              onBlur={formik.handleBlur('avatarUrl')}
+              autoCapitalize="none"
+              keyboardType="url"
+            />
+          </View>
+          {formik.errors.avatarUrl && formik.touched.avatarUrl && (
+            <Text style={styles.errorText}>{formik.errors.avatarUrl}</Text>
           )}
         </View>
 

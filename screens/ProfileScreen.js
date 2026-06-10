@@ -16,10 +16,14 @@ export default function ProfileScreen({ navigation, route }) {
   const [bio, setBio] = useState(
     'React Native enthusiast | FPT University student | Building cool apps 🚀'
   );
+  const [avatarUrl, setAvatarUrl] = useState(
+    'https://wp-cms-media.s3.ap-east-1.amazonaws.com/lay_anh_dai_dien_facebook_dep_26_b93bb9c467.jpg'
+  );
 
   useEffect(() => {
     if (route.params?.updatedName) setName(route.params.updatedName);
     if (route.params?.updatedBio) setBio(route.params.updatedBio);
+    if (route.params?.updatedAvatarUrl !== undefined) setAvatarUrl(route.params.updatedAvatarUrl);
   }, [route.params]);
 
   const styles = StyleSheet.create({
@@ -110,7 +114,7 @@ export default function ProfileScreen({ navigation, route }) {
       contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}
     >
-      <ProfileCard name={name} bio={bio} theme={theme} />
+      <ProfileCard name={name} bio={bio} theme={theme} avatarUrl={avatarUrl} />
 
       <View style={styles.statsRow}>
         <View style={styles.statCard}>
@@ -130,7 +134,7 @@ export default function ProfileScreen({ navigation, route }) {
       <View style={styles.actionSection}>
         <TouchableOpacity
           style={styles.primaryBtn}
-          onPress={() => navigation.navigate('EditProfile', { name, bio })}
+          onPress={() => navigation.navigate('EditProfile', { name, bio, avatarUrl })}
           activeOpacity={0.85}
         >
           <Ionicons name="pencil" size={20} color="#fff" />
