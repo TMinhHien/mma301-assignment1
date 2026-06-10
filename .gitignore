@@ -9,6 +9,9 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Assets (binary files - not needed for Expo Snack import)
+assets/
+
 # Native
 .kotlin/
 *.orig.*
