@@ -65,9 +65,7 @@ export default function SettingsScreen({ navigation }) {
       fontSize: 16,
       color: theme.textSecondary,
     },
-    dangerText: {
-      color: theme.danger,
-    },
+
     footerText: {
       textAlign: 'center',
       fontSize: 13,

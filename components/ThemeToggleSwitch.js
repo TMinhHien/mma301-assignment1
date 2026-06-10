@@ -11,7 +11,7 @@ export default function ThemeToggleSwitch({ isDark, onToggle, theme }) {
       useNativeDriver: false,
       bounciness: 10,
     }).start();
-  }, [isDark]);
+  }, [isDark, animatedValue]);
 
   const toggleBg = animatedValue.interpolate({
     inputRange: [0, 1],
