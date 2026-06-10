@@ -33,7 +33,6 @@ export default function EditProfileScreen({ navigation, route }) {
       bio: route.params?.bio || '',
     },
     validationSchema,
-    validateOnMount: true,
     onSubmit: (values) => {
       navigation.navigate('Profile', {
         updatedName: values.name,
@@ -162,7 +161,7 @@ export default function EditProfileScreen({ navigation, route }) {
   });
 
   const bioLength = formik.values.bio.length;
-  const isFormValid = formik.isValid;
+  const isFormValid = formik.isValid && formik.dirty;
 
   return (
     <KeyboardAvoidingView
